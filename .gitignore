@@ -3,3 +3,4 @@
 /pkg/
 /vendor/
 /src/onamaeddns/Gopkg.lock
+/src/onamaeddns/vendor/
