@@ -181,6 +181,8 @@ func (self *Client) send(msg string) error {
 	if self.exp == nil {
 		return ErrNotConected
 	}
+
+	time.Sleep(time.Millisecond * 100)
 	return self.exp.Send(msg)
 }
 
@@ -214,8 +216,8 @@ func createTlsExpect(sv string, timeout time.Duration) (*expect.GExpect, error) 
 			close(resCh)
 			return client.Close()
 		},
-		Check: func() bool { return DEBUG },
-	}, timeout, expect.Verbose(true))
+		Check: func() bool { return true},
+	}, timeout, expect.Verbose(DEBUG))
 
 	if err != nil {
 		return nil, err
