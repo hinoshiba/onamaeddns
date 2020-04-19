@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	DEBUG bool = true
+	DEBUG bool = false
 
 	StutsSucess string = "000"
 	StutsFailed string = "001"

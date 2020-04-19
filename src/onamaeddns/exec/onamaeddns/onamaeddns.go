@@ -114,4 +114,5 @@ func main() {
 	if err := ddns(); err != nil {
 		die("%s", err)
 	}
+	fmt.Printf("updated.\n")
 }
