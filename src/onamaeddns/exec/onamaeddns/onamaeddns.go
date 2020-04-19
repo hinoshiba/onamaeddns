@@ -1,11 +1,12 @@
 package main
 
 import (
-	"regexp"
 	"log"
 	"time"
-	"crypto/tls"
-	"github.com/google/goexpect"
+)
+
+import (
+	"onamaeddns"
 )
 
 var (
@@ -13,39 +14,20 @@ var (
 )
 
 const (
-	TEST_SERVER = "www.i.hinoshiba.com:443"
+	ONAMAE_SV = "ddnsclient.onamae.com:65010"
 )
 
 func main() {
-	conn, err := tls.Dial("tcp", TEST_SERVER, nil)
+	cl, err := onamaeddns.Dial(ONAMAE_SV, "username", "password", timeout)
 	if err != nil {
 		log.Println(err)
 		return
 	}
+	defer cl.Close()
 
-	resCh := make(chan error)
-
-	exp, _, err := expect.SpawnGeneric(&expect.GenOptions{
-		In:  conn,
-		Out: conn,
-		Wait: func() error {
-			return <-resCh
-		},
-		Close: func() error {
-			close(resCh)
-			return conn.Close()
-		},
-		Check: func() bool { return true },
-	}, timeout, expect.Verbose(true))
-	if err != nil {
+	if err := cl.UpdateIPv4("mytest", "example.com", "127.0.0.1"); err != nil {
 		log.Println(err)
 		return
 	}
-	defer exp.Close()
-
-	promptRE := regexp.MustCompile("HTTP")
-	exp.Send("" + "\n")
-	exp.Send("" + "\n")
-	exp.Send("." + "\n")
-	log.Println(exp.Expect(promptRE, timeout))
+	log.Println("updated")
 }
