@@ -2,5 +2,5 @@
 /bin/
 /pkg/
 /vendor/
-/src/onamaeddns/Gopkg.lock
+/src/onamaeddns/go.sum
 /src/onamaeddns/vendor/

@@ -1,0 +1,10 @@
+version: '3'
+services:
+    build-onamaeddns-go:
+        build: ./dev-go
+        user: "${CURRENT_UID}:${CURRENT_GID}"
+        tty: true
+        volumes:
+            - ../:/go/src
+        environment:
+            - BUILD_VERSION
