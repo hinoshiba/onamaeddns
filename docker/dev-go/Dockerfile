@@ -8,8 +8,6 @@ ENV GOPATH /go/src
 ENV LANG en_US.UTF-8
 #ENV http_proxy http://proxy.example.com:8080/
 #ENV https_proxy http://proxy.example.com:8080/
-ENV http_proxy http://proxy.i.hinoshiba.com:8080/
-ENV https_proxy http://proxy.i.hinoshiba.com:8080/
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
