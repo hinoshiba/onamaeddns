@@ -8,9 +8,9 @@ GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOMOD=$(GOENV) go mod
 
-BUILD_FLGS=-a -tags netgo -installsuffix netgo -ldflags='-extldflags="static"'
+BUILD_FLGS= -tags netgo -installsuffix netgo -ldflags='-extldflags="static"'
 WIN_OPT=GO111MODULE=on CGO_ENABLED=1 GOOS=windows GOARCH=amd64
-MAC_OPT=GO111MODULE=on CGO_ENABLED=1 GOOS=darwin GOARCH=amd64
+MAC_OPT=GO111MODULE=on GOOS=darwin GOARCH=arm64
 
 SRCS := $(shell find . -name '*.go' -type f)
 BINS := $(shell test -d ./bin && find ./bin/ -type f)
@@ -32,7 +32,7 @@ clean: $(BINS) ## cleanup
 build-windows: ## build to windows binary
 	cd $(CURDIR)/$(PRJ); $(WIN_OPT) $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
 build-mac: ## build to mac binary
-	cd $(CURDIR)/$(PRJ); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) goplay/exec/...
+	cd $(CURDIR)/$(PRJ); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
 
 mod: $(CURDIR)/$(PRJ)/go.mod ## mod ensure
 	cd $(CURDIR)/$(PRJ); $(GOMOD) tidy
