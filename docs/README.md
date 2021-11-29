@@ -13,6 +13,14 @@ Usage of bin/onamaeddns:
         path of credential. default "~/.onamaeddns"
 ```
 
+### build
+
+```
+$ cd <repository>/docker/
+$ make
+## use binary on '<repository>/bin/onamaeddns'
+```
+
 ## as a package
 
 ```

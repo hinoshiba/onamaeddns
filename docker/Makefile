@@ -11,7 +11,7 @@ export BUILD_VERSION
 
 SRCS := $(shell find . -type f)
 
-all: go ## test & build
+all: build run gomod gobuild stop## test & build
 
 build: $(SRCS) ## build to all container
 	$(DC) build
