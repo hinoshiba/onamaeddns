@@ -182,7 +182,6 @@ func (self *Client) send(msg string) error {
 		return ErrNotConected
 	}
 
-	time.Sleep(time.Millisecond * 100)
 	return self.exp.Send(msg)
 }
 
