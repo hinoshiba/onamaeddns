@@ -4,7 +4,7 @@ services:
         build: .
         tty: true
         volumes:
-            - /var/service/onamaeddns/etc/cred:/etc/onamaeddns/cred
+            - /var/service/onamaeddns/etc/cred:/etc/onamaeddns/cred:ro
         environment:
             - TARGET_DOMAIN=${TARGET_DOMAIN}
             - TARGET_HOST=${TARGET_HOST}

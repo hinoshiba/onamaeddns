@@ -6,12 +6,11 @@ go-onamaeddns
 
 # Usage
 
-### 1. macOS GUI
-tba
-### 2. [linux/macOS CLI](./usage-cli.md)
+本リポジトリの使い方は、4つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
 
-### 3. docker
-tba
+### 1. [macOS GUI](./usage-macOSgui.md)
+### 2. [docker](./usage-docker.md)
+### 3. [linux/macOS CLI](./usage-cli.md)
 ### 4. Library of Go.
 
 ```
