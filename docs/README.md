@@ -1,27 +1,18 @@
 go-onamaeddns
 ===
 
-* [onamae.com](https://help.onamae.com/answer/7920) ddns client.
-	* like a [this client](https://help.onamae.com/answer/7920).
+* [onamae.com](https://help.onamae.com/answer/7920) ddns client on Linux And macOS.
+	* like a [this client](https://help.onamae.com/answer/7920) at Windows.
 
-## usage
+# Usage
 
-```
-[user@host]$ onamaeddns [-c <path of credential>] <host> <domain> <ip address>
-Usage of bin/onamaeddns:
-  -c string
-        path of credential. default "~/.onamaeddns"
-```
+### 1. macOS GUI
+tba
+### 2. [linux/macOS CLI](./usage-cli.md)
 
-### build
-
-```
-$ cd <repository>/docker/
-$ make
-## use binary on '<repository>/bin/onamaeddns'
-```
-
-## as a package
+### 3. docker
+tba
+### 4. Library of Go.
 
 ```
 package main
@@ -32,7 +23,7 @@ import (
 )
 
 import (
-	"github.com/hinoshiba/go-onamaeddns/src/onamaeddns"
+	"github.com/hinoshiba/go-onamaeddns/"
 )
 
 func main() {
@@ -49,6 +40,17 @@ func main() {
 	}
 	log.Println("updated")
 }
+```
+
+
+# Maintenance
+
+## build
+
+```
+$ cd <repository>/docker/
+$ make
+## use binary on '<repository>/bin/...'
 ```
 
 

@@ -1,12 +1,12 @@
 NAME=onamaeddns
 PRJ=src/$(NAME)
 
-GOENV=GOPATH=$(CURDIR)
-GOCMD=$(GOENV) go
+#GOENV=GOPATH=$(CURDIR)
+GOCMD=go
 GOBUILD=$(GOCMD) install
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
-GOMOD=$(GOENV) go mod
+GOMOD=$(GOCMD) mod
 
 BUILD_FLGS= -tags netgo -installsuffix netgo -ldflags='-extldflags="static"'
 WIN_OPT=GO111MODULE=on CGO_ENABLED=1 GOOS=windows GOARCH=amd64
@@ -18,7 +18,9 @@ BINS := $(shell test -d ./bin && find ./bin/ -type f)
 all: test build ## test & build
 
 build: $(SRCS) ## build to linux binary
-	cd $(CURDIR)/$(PRJ); GO111MODULE=on CGO_ENABLED=1 $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
+	$(GOBUILD) $(BUILD_FLGS) exec/...
+	#cd $(CURDIR)/$(PRJ); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) exec/...
+	$(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) exec/...
 
 .PHONY: test
 test: ## run test
@@ -29,16 +31,11 @@ clean: $(BINS) ## cleanup
 	$(GOCLEAN)
 	rm -f $(BINS)
 
-build-windows: ## build to windows binary
-	cd $(CURDIR)/$(PRJ); $(WIN_OPT) $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
-build-mac: ## build to mac binary
-	cd $(CURDIR)/$(PRJ); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
-
-mod: $(CURDIR)/$(PRJ)/go.mod ## mod ensure
-	cd $(CURDIR)/$(PRJ); $(GOMOD) tidy
-	cd $(CURDIR)/$(PRJ); $(GOMOD) vendor
+mod: go.mod ## mod ensure
+	$(GOMOD) tidy
+	$(GOMOD) vendor
 modinit: ## mod init
-	cd $(CURDIR)/$(PRJ); $(GOMOD) init
+	$(GOMOD) init
 
 .PHONY: help
 	all: help

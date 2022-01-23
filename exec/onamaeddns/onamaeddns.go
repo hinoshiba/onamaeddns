@@ -11,7 +11,7 @@ import (
 )
 
 import (
-	"onamaeddns"
+	"github.com/hinoshiba/go-onamaeddns/src/onamaeddns"
 )
 
 var (
