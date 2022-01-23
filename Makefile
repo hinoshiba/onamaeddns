@@ -1,7 +1,4 @@
-NAME=onamaeddns
-PRJ=src/$(NAME)
-
-#GOENV=GOPATH=$(CURDIR)
+GOENV=GOPATH=$(CURDIR)
 GOCMD=go
 GOBUILD=$(GOCMD) install
 GOCLEAN=$(GOCMD) clean
@@ -9,8 +6,8 @@ GOTEST=$(GOCMD) test
 GOMOD=$(GOCMD) mod
 
 BUILD_FLGS= -tags netgo -installsuffix netgo -ldflags='-extldflags="static"'
-WIN_OPT=GO111MODULE=on CGO_ENABLED=1 GOOS=windows GOARCH=amd64
-MAC_OPT=GO111MODULE=on GOOS=darwin GOARCH=arm64
+LINUX_OPT= GOOS=linux GOARCH=amd64
+MAC_OPT= GOOS=darwin GOARCH=arm64
 
 SRCS := $(shell find . -name '*.go' -type f)
 BINS := $(shell test -d ./bin && find ./bin/ -type f)
@@ -18,13 +15,16 @@ BINS := $(shell test -d ./bin && find ./bin/ -type f)
 all: test build ## test & build
 
 build: $(SRCS) ## build to linux binary
-	$(GOBUILD) $(BUILD_FLGS) exec/...
-	#cd $(CURDIR)/$(PRJ); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) exec/...
-	$(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) exec/...
+	$(LINUX_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
+	mkdir -p /go/src/bin/Linux_x86_64/
+	mv /go/src/bin/onamaeddns /go/src/bin/Linux_x86_64/
+	$(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
+	mkdir -p /go/src/bin/Darwin_aarch64/
+	mv /go/src/bin/onamaeddns /go/src/bin/Darwin_aarch64/
 
 .PHONY: test
 test: ## run test
-	$(GOTEST) -count=1 ./$(PRJ)/...
+	$(GOTEST) -count=1 ./onamaeddns_test.go
 
 .PHONY: clean
 clean: $(BINS) ## cleanup

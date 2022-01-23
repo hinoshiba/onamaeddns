@@ -16,10 +16,10 @@ RUN apt update && \
 RUN cd /opt && wget -nv --show-progress --progress=bar:force:noscroll https://golang.org/dl/go${GOVERSION}.linux-amd64.tar.gz && \
     tar zxf go${GOVERSION}.linux-amd64.tar.gz && rm go${GOVERSION}.linux-amd64.tar.gz && \
     ln -s /opt/go/bin/go /usr/bin/ && \
-    mkdir -p ${GOPATH} && \
+    mkdir -p /go/ && \
     mkdir /.cache && \
     chmod 777 /.cache && \
     mkdir -p /go/pkg && \
     chmod 777 -R /go/pkg
 
-WORKDIR ${GOPATH}
+WORKDIR /go/src/
