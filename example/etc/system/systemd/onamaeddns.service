@@ -1,0 +1,16 @@
+[Unit]
+Description=onamae ddns docker-compose.
+After=syslog.target
+After=network.target
+After=docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/docker-compose up --no-color
+Restart=on-success
+StandardOutput=syslog
+StandardError=syslog
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target
