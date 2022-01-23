@@ -1,4 +1,6 @@
 
+SRCS := $(shell find . -name '*.go' -type f)
+
 .PHONY: all
 all: build-bin build-docker ## build binary and build docker.
 	docker-compose build
@@ -17,9 +19,10 @@ build-docker: Dockerfile docker-in/exec_ddns.sh bin/Linux_x86_64/onamaeddns ## b
 .PHONY: build-bin
 build-bin: bin/Linux_x86_64/onamaeddns bin/Darwin_aarch64/onamaeddns ## build binary.
 
-bin/Linux_x86_64/onamaeddns:
+
+bin/Linux_x86_64/onamaeddns: $(SRCS)
 	make -C dev-env
-bin/Darwin_aarch64/onamaeddns:
+bin/Darwin_aarch64/onamaeddns: $(SRCS)
 	make -C dev-env
 
 help: ## help
