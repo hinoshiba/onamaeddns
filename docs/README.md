@@ -24,7 +24,7 @@ import (
 )
 
 import (
-	"github.com/hinoshiba/go-onamaeddns/"
+	"github.com/hinoshiba/go-onamaeddns"
 )
 
 func main() {
