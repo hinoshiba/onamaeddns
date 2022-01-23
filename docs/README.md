@@ -1,8 +1,10 @@
 go-onamaeddns
 ===
 
-* [onamae.com](https://help.onamae.com/answer/7920) ddns client on Linux And macOS.
-	* like a [this client](https://help.onamae.com/answer/7920) at Windows.
+* Linux及び、macOSの、[onamae.com](https://help.onamae.com/answer/7920) DDNSクライアント と、そのライブラリ
+	* Windowsで動作する [公式クライアント](https://help.onamae.com/answer/7920) のモノマネです
+	* 有志が勝手に作っているので、ご利用は自己責任でお願いします
+	* いくつかのサンプルやイメージのグローバルIPアドレス取得元は、`globalip.me` を活用しています
 
 # Usage
 
@@ -47,12 +49,13 @@ func main() {
 ## build
 
 ```
-$ cd <repository>/docker/
+$ vim <repository>/docker-compose.yml
+# enable debug
 $ make
-## use binary on '<repository>/bin/...'
+## build to '<repository>/bin/...' & docker images
 ```
 
 
-## References
+# References
 
 * [LinuxやMacで お名前.com ダイナミックDNS の IPアドレスを更新する https://qiita.com/ats124/items/59ec0f444d00bbcea27d](https://qiita.com/ats124/items/59ec0f444d00bbcea27d)

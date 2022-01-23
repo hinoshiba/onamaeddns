@@ -1,7 +1,8 @@
 version: '3'
 services:
     onamaeddns:
-        build: .
+        ##build: . ## enalbe when debug
+        image: hinoshiba/onamaeddns:v1.0.0 ## comment out when debug.
         tty: true
         volumes:
             - /var/service/onamaeddns/etc/cred:/etc/onamaeddns/cred:ro
