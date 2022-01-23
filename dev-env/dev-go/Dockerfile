@@ -21,6 +21,6 @@ RUN cd /opt && wget -nv --show-progress --progress=bar:force:noscroll https://go
     chmod 777 /.cache && \
     mkdir -p /go/pkg && \
     chmod 777 -R /go/pkg
-RUN ln -s /go/src/Makefile.inbuilder /go/Makefile
+RUN ln -s /go/src/Makefile.4builder /go/Makefile
 
 WORKDIR /go
