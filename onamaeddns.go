@@ -30,7 +30,7 @@ var (
 
 type Client struct {
 	exp    *expect.GExpect
-	ctx    *context.Context
+	ctx    context.Context
 	mtx    *sync.Mutex
 }
 
@@ -48,7 +48,7 @@ func dial(ctx context.Context, sv string, user string, pass string, timeout time
 		return nil, err
 	}
 
-	self := &Client{exp:exp, mtx:new(sync.Mutex), ctx: ctx}
+	self := &Client{exp:exp, mtx:new(sync.Mutex), ctx:ctx}
 	if err := self.login(user, pass); err != nil {
 		defer self.exp.Close()
 		return nil, err
@@ -71,7 +71,7 @@ func (self *Client) Close() error {
 
 func (self *Client) isCanceledContext() bool {
 	select {
-	case self.ctx.Done():
+	case <-self.ctx.Done():
 		return true
 	default:
 	}
