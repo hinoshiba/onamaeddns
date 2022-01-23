@@ -12,7 +12,7 @@ export BUILD_VERSION
 SRCS := $(shell find . -type f)
 
 .PHONY: all
-all: build run gomod gobuild stop## test & build
+all: run gomod gobuild stop## test & build
 
 .PHONY: build
 build: $(SRCS) ## build to all container
@@ -24,7 +24,7 @@ run: $(SRCS) ## start up to all container
 
 .PHONY: stop
 stop: $(SRCS) ## down to to all container
-	$(DC) down
+	$(DC) stop
 
 .PHONY: test
 test:

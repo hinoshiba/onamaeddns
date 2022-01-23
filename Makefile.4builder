@@ -8,7 +8,9 @@ WORKPATH=/go/src
 
 BUILD_FLGS= -tags netgo -installsuffix netgo -ldflags='-extldflags="static"'
 LINUX_OPT= GOOS=linux GOARCH=amd64
+LINUX_UNAME=Linux_x86_64
 MAC_OPT= GOOS=darwin GOARCH=arm64
+MAC_UNAME=Darwin_aarch64
 
 SRCS := $(shell find . -name '*.go' -type f)
 BINS := $(shell test -d ./bin && find ./bin/ -type f)
@@ -17,11 +19,13 @@ all: test build ## test & build
 
 build: $(SRCS) ## build to linux binary
 	cd $(WORKPATH); $(LINUX_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
-	cd $(WORKPATH); mkdir -p /go/src/bin/Linux_x86_64/
-	cd $(WORKPATH); mv /go/src/bin/onamaeddns /go/src/bin/Linux_x86_64/
+	cd $(WORKPATH); mkdir -p /go/src/bin/onamaeddns-$(LINUX_UNAME)/
+	cd $(WORKPATH); mv /go/src/bin/onamaeddns /go/src/bin/onamaeddns-$(LINUX_UNAME)/
 	cd $(WORKPATH); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
-	cd $(WORKPATH); mkdir -p /go/src/bin/Darwin_aarch64/
-	mv /go/src/bin/onamaeddns /go/src/bin/Darwin_aarch64/
+	cd $(WORKPATH); mkdir -p /go/src/bin/onamaeddns-$(MAC_UNAME)/
+	cd $(WORKPATH); mv /go/src/bin/onamaeddns /go/src/bin/onamaeddns-$(MAC_UNAME)/
+	cd $(WORKPATH); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddnsOnMac/
+	cd $(WORKPATH); mv /go/src/bin/darwin_arm64 /go/src/bin/onamaeddnsOnMac-$(MAC_UNAME)
 
 .PHONY: test
 test: ## run test
