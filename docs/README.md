@@ -10,8 +10,7 @@ go-onamaeddns
 
 本リポジトリの使い方は、3つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
 
-### 1. [docker](./usage-docker.md)
-![dokcerimage-lastversion](https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg)
+### 1. [docker](./usage-docker.md) ![dokcerimage-lastversion](https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg)
 ### 2. [linux/macOS CLI](./usage-cli.md)
 ### 3. Library of Go.
 
