@@ -11,7 +11,7 @@ go-onamaeddns
 本リポジトリの使い方は、4つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
 
 ### 1. [docker](./usage-docker.md)
-![https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg]()
+![dokcerimage-lastversion](https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg)
 ### 2. [linux/macOS CLI](./usage-cli.md)
 ### 3. Library of Go.
 
@@ -54,6 +54,19 @@ $ make
 $ vim <repository>/docker-compose.yml
 # enable debug
 $ docker-compose up
+```
+
+## release
+```
+# docker
+docker build -t hinoshiba/onamaeddns:<version> .
+docker push hinoshiba/onamaeddns:<version>
+
+# bin
+## case of zip.
+cd bin/<target>; zip ../<target>.zip ./*
+## case of tar.gz.
+cd bin/<target>; tar cvfz ../<target>.tar.tz ./*
 ```
 
 
