@@ -24,8 +24,6 @@ build: $(SRCS) ## build to linux binary
 	cd $(WORKPATH); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
 	cd $(WORKPATH); mkdir -p /go/src/bin/onamaeddns-$(MAC_UNAME)/
 	cd $(WORKPATH); mv /go/src/bin/onamaeddns /go/src/bin/onamaeddns-$(MAC_UNAME)/
-	cd $(WORKPATH); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddnsOnMac/
-	cd $(WORKPATH); mv /go/src/bin/darwin_arm64 /go/src/bin/onamaeddnsOnMac-$(MAC_UNAME)
 
 .PHONY: test
 test: ## run test
