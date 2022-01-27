@@ -7,6 +7,7 @@ import (
 	"crypto/tls"
 	"regexp"
 	"strings"
+	"context"
 )
 
 import (
@@ -29,19 +30,31 @@ var (
 
 type Client struct {
 	exp    *expect.GExpect
+	ctx    context.Context
 	mtx    *sync.Mutex
 }
 
 func Dial(sv string, user string, pass string, timeout time.Duration) (*Client, error) {
-	exp, err := createTlsExpect(sv, timeout)
+	return dial(context.Background(), sv, user, pass, timeout)
+}
+
+func DialWithContext(ctx context.Context, sv string, user string, pass string, timeout time.Duration) (*Client, error) {
+	return dial(ctx, sv, user, pass, timeout)
+}
+
+func dial(ctx context.Context, sv string, user string, pass string, timeout time.Duration) (*Client, error) {
+	exp, err := createTlsExpect(ctx, sv, timeout)
 	if err != nil {
 		return nil, err
 	}
 
-	self := &Client{exp:exp, mtx:new(sync.Mutex)}
+	self := &Client{exp:exp, mtx:new(sync.Mutex), ctx:ctx}
 	if err := self.login(user, pass); err != nil {
 		defer self.exp.Close()
 		return nil, err
+	}
+	if self.isCanceledContext() {
+		return nil, fmt.Errorf("closed context.")
 	}
 	return self, nil
 }
@@ -56,10 +69,22 @@ func (self *Client) Close() error {
 	return self.exp.Close()
 }
 
+func (self *Client) isCanceledContext() bool {
+	select {
+	case <-self.ctx.Done():
+		return true
+	default:
+	}
+	return false
+}
+
 func (self *Client) UpdateIPv4(host string, dom string, ip string) error {
 	self.lock()
 	defer self.unlock()
 
+	if self.isCanceledContext() {
+		return fmt.Errorf("closed context.")
+	}
 	return self.update(host, dom, ip)
 }
 
@@ -67,6 +92,9 @@ func (self *Client) Expect(rxp *regexp.Regexp, timeout time.Duration) (string, [
 	self.lock()
 	defer self.unlock()
 
+	if self.isCanceledContext() {
+		return "", nil, fmt.Errorf("closed context.")
+	}
 	return self.expect(rxp, timeout)
 }
 
@@ -74,6 +102,9 @@ func (self *Client) Send(s string, val ...interface{}) error {
 	self.lock()
 	defer self.unlock()
 
+	if self.isCanceledContext() {
+		return fmt.Errorf("closed context.")
+	}
 	msg := fmt.Sprintf(s, val...)
 	return self.send(msg)
 }
@@ -198,8 +229,9 @@ type status struct {
 	msg string
 }
 
-func createTlsExpect(sv string, timeout time.Duration) (*expect.GExpect, error) {
-	client, err := tls.Dial("tcp", sv, nil)
+func createTlsExpect(ctx context.Context, sv string, timeout time.Duration) (*expect.GExpect, error) {
+	dr := new(tls.Dialer)
+	client, err := dr.DialContext(ctx, "tcp", sv)
 	if err != nil {
 		return nil, err
 	}
@@ -215,7 +247,14 @@ func createTlsExpect(sv string, timeout time.Duration) (*expect.GExpect, error) 
 			close(resCh)
 			return client.Close()
 		},
-		Check: func() bool { return true},
+		Check: func() bool {
+			select {
+			case <- ctx.Done():
+				return false
+			default:
+			}
+			return true
+		},
 	}, timeout, expect.Verbose(DEBUG))
 
 	if err != nil {

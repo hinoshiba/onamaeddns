@@ -1,27 +1,19 @@
 go-onamaeddns
 ===
 
-* [onamae.com](https://help.onamae.com/answer/7920) ddns client.
-	* like a [this client](https://help.onamae.com/answer/7920).
+* Linux及び、macOSの、[onamae.com](https://help.onamae.com/answer/7920) DDNSクライアント と、そのライブラリ
+	* Windowsで動作する [公式クライアント](https://help.onamae.com/answer/7920) のモノマネです
+	* 有志が勝手に作っているので、ご利用は自己責任でお願いします
+	* いくつかのサンプルやイメージのグローバルIPアドレス取得元は、`globalip.me` を活用しています
 
-## usage
+# Usage
 
-```
-[user@host]$ onamaeddns [-c <path of credential>] <host> <domain> <ip address>
-Usage of bin/onamaeddns:
-  -c string
-        path of credential. default "~/.onamaeddns"
-```
+本リポジトリの使い方は、4つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
 
-### build
-
-```
-$ cd <repository>/docker/
-$ make
-## use binary on '<repository>/bin/onamaeddns'
-```
-
-## as a package
+### 1. [docker](./usage-docker.md)
+![dokcerimage-lastversion](https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg)
+### 2. [linux/macOS CLI](./usage-cli.md)
+### 3. Library of Go.
 
 ```
 package main
@@ -32,7 +24,7 @@ import (
 )
 
 import (
-	"github.com/hinoshiba/go-onamaeddns/src/onamaeddns"
+	"github.com/hinoshiba/go-onamaeddns"
 )
 
 func main() {
@@ -52,6 +44,32 @@ func main() {
 ```
 
 
-## References
+# Maintenance
+
+## build
+
+```
+$ make
+## build to '<repository>/bin/...' & docker images
+$ vim <repository>/docker-compose.yml
+# enable debug
+$ docker-compose up
+```
+
+## release
+```
+# docker
+docker build -t hinoshiba/onamaeddns:<version> .
+docker push hinoshiba/onamaeddns:<version>
+
+# bin
+## case of zip.
+cd bin/<target>; zip ../<target>.zip ./*
+## case of tar.gz.
+cd bin/<target>; tar cvfz ../<target>.tar.tz ./*
+```
+
+
+# References
 
 * [LinuxやMacで お名前.com ダイナミックDNS の IPアドレスを更新する https://qiita.com/ats124/items/59ec0f444d00bbcea27d](https://qiita.com/ats124/items/59ec0f444d00bbcea27d)

@@ -1,0 +1,11 @@
+version: '3'
+services:
+    onamaeddns:
+        ##build: . ## enalbe when debug
+        image: hinoshiba/onamaeddns:v1.0.1 ## comment out when debug.
+        tty: true
+        volumes:
+            - /var/service/onamaeddns/etc/cred:/etc/onamaeddns/cred:ro
+        environment:
+            - TARGET_DOMAIN=${TARGET_DOMAIN}
+            - TARGET_HOST=${TARGET_HOST}

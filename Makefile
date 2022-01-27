@@ -1,47 +1,33 @@
-NAME=onamaeddns
-PRJ=src/$(NAME)
-
-GOENV=GOPATH=$(CURDIR)
-GOCMD=$(GOENV) go
-GOBUILD=$(GOCMD) install
-GOCLEAN=$(GOCMD) clean
-GOTEST=$(GOCMD) test
-GOMOD=$(GOENV) go mod
-
-BUILD_FLGS= -tags netgo -installsuffix netgo -ldflags='-extldflags="static"'
-WIN_OPT=GO111MODULE=on CGO_ENABLED=1 GOOS=windows GOARCH=amd64
-MAC_OPT=GO111MODULE=on GOOS=darwin GOARCH=arm64
 
 SRCS := $(shell find . -name '*.go' -type f)
-BINS := $(shell test -d ./bin && find ./bin/ -type f)
 
-all: test build ## test & build
-
-build: $(SRCS) ## build to linux binary
-	cd $(CURDIR)/$(PRJ); GO111MODULE=on CGO_ENABLED=1 $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
-
-.PHONY: test
-test: ## run test
-	$(GOTEST) -count=1 ./$(PRJ)/...
+.PHONY: all
+all: build-bin build-docker ## build binary and build docker.
+	make builded_flg.unlock
 
 .PHONY: clean
-clean: $(BINS) ## cleanup
-	$(GOCLEAN)
-	rm -f $(BINS)
+clean: builded_flg.unlock ## cleanup
+	docker rmi hinoshiba/onamaeddns:debug
+	make -C dev-env clean
+	rm -rf ./vendor/ || exit 0
+	rm -rf ./bin/ || exit 0
 
-build-windows: ## build to windows binary
-	cd $(CURDIR)/$(PRJ); $(WIN_OPT) $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
-build-mac: ## build to mac binary
-	cd $(CURDIR)/$(PRJ); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) $(NAME)/exec/...
+.PHONY: build-docker
+build-docker: Dockerfile docker-in/exec_ddns.sh builded_flg.mtx ## build docker image.
+	docker build -t onamaeddns:debug .
 
-mod: $(CURDIR)/$(PRJ)/go.mod ## mod ensure
-	cd $(CURDIR)/$(PRJ); $(GOMOD) tidy
-	cd $(CURDIR)/$(PRJ); $(GOMOD) vendor
-modinit: ## mod init
-	cd $(CURDIR)/$(PRJ); $(GOMOD) init
+.PHONY: build-bin
+build-bin: builded_flg.mtx ## build binary.
+
+builded_flg.mtx: $(SRCS)
+	touch builded_flg.mtx
+	make -C dev-env ## exec build binary.
+
+.PHONY: builded_flg.unlock
+builded_flg.unlock:
+	rm builded_flg.mtx || exit 0
 
 .PHONY: help
-	all: help
 help: ## help
 	@awk -F ':|##' '/^[^\t].+?:.*?##/ {\
 		printf "\033[36m%-30s\033[0m %s\n", $$1, $$NF \
