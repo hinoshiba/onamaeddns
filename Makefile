@@ -3,7 +3,6 @@ SRCS := $(shell find . -name '*.go' -type f)
 
 .PHONY: all
 all: build-bin build-docker ## build binary and build docker.
-	docker build -t onamaeddns:debug .
 	make builded_flg.unlock
 
 .PHONY: clean
@@ -15,15 +14,14 @@ clean: builded_flg.unlock ## cleanup
 
 .PHONY: build-docker
 build-docker: Dockerfile docker-in/exec_ddns.sh builded_flg.mtx ## build docker image.
-	docker-compose build
+	docker build -t onamaeddns:debug .
 
 .PHONY: build-bin
 build-bin: builded_flg.mtx ## build binary.
 
 builded_flg.mtx: $(SRCS)
 	touch builded_flg.mtx
-	# build bin/Linux_x86_64/onamaeddns bin/Darwin_aarch64/onamaeddns
-	make -C dev-env
+	make -C dev-env ## exec build binary.
 
 .PHONY: builded_flg.unlock
 builded_flg.unlock:
