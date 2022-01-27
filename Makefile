@@ -3,12 +3,12 @@ SRCS := $(shell find . -name '*.go' -type f)
 
 .PHONY: all
 all: build-bin build-docker ## build binary and build docker.
-	docker-compose build
+	docker build -t onamaeddns:debug .
 	make builded_flg.unlock
 
 .PHONY: clean
 clean: builded_flg.unlock ## cleanup
-	docker-compose down --rmi all
+	docker rmi hinoshiba/onamaeddns:debug
 	make -C dev-env clean
 	rm -rf ./vendor/ || exit 0
 	rm -rf ./bin/ || exit 0

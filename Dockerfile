@@ -11,7 +11,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-ADD ./bin/Linux_x86_64/onamaeddns /usr/local/bin/onamaeddns
+ADD ./bin/onamaeddns-Linux_x86_64/onamaeddns /usr/local/bin/onamaeddns
 ADD ./docker-in/exec_ddns.sh /usr/local/bin/exec_ddns.sh
 
 RUN chmod +x /usr/local/bin/onamaeddns && \

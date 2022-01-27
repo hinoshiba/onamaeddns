@@ -10,10 +10,10 @@ go-onamaeddns
 
 本リポジトリの使い方は、4つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
 
-### 1. [macOS GUI](./usage-macOSgui.md)
-### 2. [docker](./usage-docker.md)
-### 3. [linux/macOS CLI](./usage-cli.md)
-### 4. Library of Go.
+### 1. [docker](./usage-docker.md)
+![https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg]()
+### 2. [linux/macOS CLI](./usage-cli.md)
+### 3. Library of Go.
 
 ```
 package main
@@ -49,10 +49,11 @@ func main() {
 ## build
 
 ```
-$ vim <repository>/docker-compose.yml
-# enable debug
 $ make
 ## build to '<repository>/bin/...' & docker images
+$ vim <repository>/docker-compose.yml
+# enable debug
+$ docker-compose up
 ```
 
 
