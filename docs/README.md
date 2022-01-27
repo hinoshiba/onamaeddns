@@ -8,7 +8,7 @@ go-onamaeddns
 
 # Usage
 
-本リポジトリの使い方は、4つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
+本リポジトリの使い方は、3つの方法があります。昇順で簡単なので、お好みの使い方をしてください  
 
 ### 1. [docker](./usage-docker.md)
 ![dokcerimage-lastversion](https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg)
