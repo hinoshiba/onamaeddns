@@ -1,4 +1,4 @@
-module github.com/hinoshiba/go-onamaeddns
+module github.com/hinoshiba/onamaeddns
 
 go 1.17
 
