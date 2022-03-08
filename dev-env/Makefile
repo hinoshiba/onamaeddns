@@ -28,7 +28,7 @@ stop: $(SRCS) ## down to to all container
 
 .PHONY: test
 test:
-	$(DC) exec $(GOLANG) pwd
+	$(DC) exec -T $(GOLANG) pwd
 
 .PHONY: clean
 clean: ## stop container and cleanup data
@@ -36,22 +36,22 @@ clean: ## stop container and cleanup data
 
 .PHONY: go
 go: ## run golang
-	$(DC) exec $(GOLANG) make
+	$(DC) exec -T $(GOLANG) make
 .PHONY: gobuild
 gobuild: ## build golang
-	$(DC) exec $(GOLANG) make build
+	$(DC) exec -T $(GOLANG) make build
 .PHONY: gotest
 gotest: ## test golang
-	$(DC) exec $(GOLANG) make test
+	$(DC) exec -T $(GOLANG) make test
 .PHONY: gomod
 gomod: ## run golang package manager
-	$(DC) exec $(GOLANG) make mod
+	$(DC) exec -T $(GOLANG) make mod
 .PHONY: gomodinit
 gomodinit: ## init golang package manager
-	$(DC) exec $(GOLANG) make modinit
+	$(DC) exec -T $(GOLANG) make modinit
 .PHONY: goclean
 goclean: ## clean golang
-	$(DC) exec $(GOLANG) make clean
+	$(DC) exec -T $(GOLANG) make clean
 
 .PHONY: help
 	all: help

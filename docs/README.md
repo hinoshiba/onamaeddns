@@ -42,7 +42,6 @@ func main() {
 }
 ```
 
-
 # Maintenance
 
 ## build
@@ -57,15 +56,12 @@ $ docker-compose up
 
 ## release
 ```
-# docker
-docker build -t hinoshiba/onamaeddns:<version> .
-docker push hinoshiba/onamaeddns:<version>
-
-# bin
-## case of zip.
-cd bin/<target>; zip ../<target>.zip ./*
-## case of tar.gz.
-cd bin/<target>; tar cvfz ../<target>.tar.tz ./*
+# binary & github
+git tag -a v[0-9].[0-9].[0-9] -m ''
+git push origin v[0-9].[0-9].[0-9]
+## auto run: ./github/workflows/release.yml
+# Edit release of draft on https://github.com/hinoshiba/go-onamaeddns/releases
+# And, Check to dockerhub image: https://hub.docker.com/repository/docker/hinoshiba/onamaeddns
 ```
 
 
