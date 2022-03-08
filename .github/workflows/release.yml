@@ -1,0 +1,68 @@
+name: tag2release
+on:
+  push:
+    tags:
+    - v*
+jobs:
+  buildAndRelease:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout from repository.
+        uses: actions/checkout@v2
+      - name: Build binary's.
+        run: |
+          mkdir bin
+          make build-bin
+          cd bin
+          cd onamaeddns-Darwin_aarch64 && tar cvfz ../onamaeddns-Darwin_aarch64.tar.gz ./onamaeddns && cd ..
+          cd onamaeddns-Linux_x86_64 && tar cvfz ../onamaeddns-Linux_x86_64.tar.gz ./onamaeddns && cd ..
+      - name: Create release.
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: true
+          prerelease: false
+      - name: Upload binary for Apple M1.
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/onamaeddns-Darwin_aarch64.tar.gz
+          asset_name: onamaeddns-Darwin_aarch64.tar.gz
+          asset_content_type: application/gzip
+      - name: Upload binary for Linux x86_64.
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/onamaeddns-Linux_x86_64.tar.gz
+          asset_name: onamaeddns-Linux_x86_64.tar.gz
+          asset_content_type: application/gzip
+      - name: Get version number.
+        id: tag_number
+        run: |
+          CURRENT_TAG=$(git tag --sort=-creatordate | sed -n 1p)
+          DOCKERHUB_TAG="${CURRENT_TAG//v/}"
+          echo "::set-output name=dh_tag::${DOCKERHUB_TAG}"
+      - name: Set up Docker Buildx.
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and Push to Docker Hub.
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            hinoshiba/onamaeddns:latest
+            hinoshiba/onamaeddns:${{steps.tag_number.outputs.dh_tag}}
+

@@ -1,0 +1,15 @@
+name: check_pr
+on:
+  pull_request:
+    branches:
+    - master
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout from repository.
+        uses: actions/checkout@v2
+      - name: Build binary's.
+        run: |
+          mkdir bin
+          make build-bin
