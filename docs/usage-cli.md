@@ -15,7 +15,7 @@ Usage of bin/onamaeddns:
 # Setup
 
 1. 以下から、バイナリをダウンロードし、実行権限の付与、PATHを通します
-	* https://github.com/hinoshiba/go-onamaeddns/releases
+	* https://github.com/hinoshiba/onamaeddns/releases
 2. `~/.onamaeddns` に、認証情報を設置します
 	* [sample: .onamaeddns](../sample/userhome/.onamaeddns)
 3. お好みで、実行スクリプトを作成し、実行します

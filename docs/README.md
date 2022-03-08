@@ -1,4 +1,4 @@
-go-onamaeddns
+onamaeddns
 ===
 
 * Linux及び、macOSの、[onamae.com](https://help.onamae.com/answer/7920) DDNSクライアント と、そのライブラリ
@@ -23,7 +23,7 @@ import (
 )
 
 import (
-	"github.com/hinoshiba/go-onamaeddns"
+	"github.com/hinoshiba/onamaeddns"
 )
 
 func main() {
@@ -60,7 +60,7 @@ $ docker-compose up
 git tag -a v[0-9].[0-9].[0-9] -m ''
 git push origin v[0-9].[0-9].[0-9]
 ## auto run: ./github/workflows/release.yml
-# Edit release of draft on https://github.com/hinoshiba/go-onamaeddns/releases
+# Edit release of draft on https://github.com/hinoshiba/onamaeddns/releases
 # And, Check to dockerhub image: https://hub.docker.com/repository/docker/hinoshiba/onamaeddns
 ```
 
