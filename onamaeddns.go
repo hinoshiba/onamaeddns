@@ -20,7 +20,7 @@ import (
 const (
 	debug bool = false
 
-	statusSucess string = "000"
+	statusSuccess string = "000"
 	stautsFailed string = "001"
 
 	OfficialAddress string = "ddnsclient.onamae.com:65010"
@@ -210,7 +210,7 @@ func (self *Client) getStatus() (*status, error) {
 		return nil, fmt.Errorf("cant parse response, %s", ret)
 	}
 
-	ok := (st[0] == stutsSucess)
+	ok := (st[0] == statusSuccess)
 	msg := st[1]
 	return &status{ok:ok, msg:msg}, nil
 }
