@@ -18,10 +18,10 @@ BINS := $(shell test -d ./bin && find ./bin/ -type f)
 all: test build ## test & build
 
 build: $(SRCS) ## build to linux binary
-	cd $(WORKPATH); $(LINUX_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
+	cd $(WORKPATH); $(LINUX_OPT) $(GOBUILD) $(BUILD_FLGS) ./cmd/onamaeddns/onamaeddns.go
 	cd $(WORKPATH); mkdir -p /go/src/bin/onamaeddns-$(LINUX_UNAME)/
 	cd $(WORKPATH); mv /go/src/bin/onamaeddns /go/src/bin/onamaeddns-$(LINUX_UNAME)/
-	cd $(WORKPATH); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./exec/onamaeddns/onamaeddns.go
+	cd $(WORKPATH); $(MAC_OPT) $(GOBUILD) $(BUILD_FLGS) ./cmd/onamaeddns/onamaeddns.go
 	cd $(WORKPATH); mkdir -p /go/src/bin/onamaeddns-$(MAC_UNAME)/
 	cd $(WORKPATH); mv /go/src/bin/onamaeddns /go/src/bin/onamaeddns-$(MAC_UNAME)/
 

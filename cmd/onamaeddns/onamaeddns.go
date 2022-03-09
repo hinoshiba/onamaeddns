@@ -24,12 +24,8 @@ var (
 	Domain    string
 )
 
-const (
-	ONAMAE_SV = "ddnsclient.onamae.com:65010"
-)
-
 func ddns() error {
-	cl, err := onamaeddns.Dial(ONAMAE_SV, User, Pass, timeout)
+	cl, err := onamaeddns.Dial(onamaeddns.OfficialAddress, User, Pass, timeout)
 	if err != nil {
 		return err
 	}

@@ -14,6 +14,9 @@ onamaeddns
 ### 2. [linux/macOS CLI](./usage-cli.md)
 ### 3. Library of Go.
 
+#### [go doc](https://pkg.go.dev/github.com/hinoshiba/onamaeddns)
+
+#### sample
 ```
 package main
 
@@ -27,7 +30,7 @@ import (
 )
 
 func main() {
-	cl, err := onamaeddns.Dial("ddnsclient.onamae.com:65010", "username", "password", time.Minute)
+	cl, err := onamaeddns.Dial(onamaeddns.OfficialAddress, "username", "password", time.Minute)
 	if err != nil {
 		log.Println(err)
 		return
@@ -42,28 +45,10 @@ func main() {
 }
 ```
 
-# Maintenance
+# Operation
 
-## build
-
-```
-$ make
-## build to '<repository>/bin/...' & docker images
-$ vim <repository>/docker-compose.yml
-# enable debug
-$ docker-compose up
-```
-
-## release
-```
-# binary & github
-git tag -a v[0-9].[0-9].[0-9] -m ''
-git push origin v[0-9].[0-9].[0-9]
-## auto run: ./github/workflows/release.yml
-# Edit release of draft on https://github.com/hinoshiba/onamaeddns/releases
-# And, Check to dockerhub image: https://hub.docker.com/repository/docker/hinoshiba/onamaeddns
-```
-
+* [build](./ope/build.md)
+* [release](./ope/release.md)
 
 # References
 
