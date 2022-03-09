@@ -15,7 +15,7 @@ onamaeddns
 ### 3. Library of Go. ([Library documents](https://pkg.go.dev/github.com/hinoshiba/onamaeddns))
 
 #### sample
-```
+```go
 package main
 
 import (
