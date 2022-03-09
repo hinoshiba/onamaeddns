@@ -12,9 +12,7 @@ onamaeddns
 
 ### 1. [docker](./usage-docker.md) ![dokcerimage-lastversion](https://img.shields.io/docker/v/hinoshiba/onamaeddns.svg)
 ### 2. [linux/macOS CLI](./usage-cli.md)
-### 3. Library of Go.
-
-#### [go doc](https://pkg.go.dev/github.com/hinoshiba/onamaeddns)
+### 3. Library of Go. ([Library documents](https://pkg.go.dev/github.com/hinoshiba/onamaeddns))
 
 #### sample
 ```
